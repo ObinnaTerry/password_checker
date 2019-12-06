@@ -4,6 +4,9 @@ import hashlib
 
 
 def request_api_data(query_data):
+    """
+    connects to api, sends part of hashed password and gets response of matching hashes
+    """
     url = 'https://api.pwnedpasswords.com/range/' + query_data
     res = requests.get(url)
     if res.status_code != 200:
@@ -12,12 +15,18 @@ def request_api_data(query_data):
 
 
 def read_response(response):
+    """
+    formats matches returned by api
+    """
     result = response.text.splitlines()
     result = [i.split(':') for i in result]
     return result
 
 
 def hashed_password_check(password):
+    """
+    compares password to data returned by api for matches
+    """
     sha1password = hashlib.sha1(password.encode('utf-8')).hexdigest().upper()
     first5_char, tail = sha1password[:5], sha1password[5:]
     response = request_api_data(first5_char)
@@ -32,7 +41,7 @@ def check(password):
 
     count = hashed_password_check(password)
     if count:
-        return f'hacked {count} times, \nconsider changing it'
+        return f'Hacked {count} times, \nconsider changing it'
     else:
         return 'Not been hacked. \nCarry on!'
 
