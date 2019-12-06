@@ -47,20 +47,24 @@ def check(password):
 
 
 def submit_command():
+    T1.config(state='normal')
     T1.delete('1.0', END)
     if password_text.get():
         result = check(password_text.get())
         T1.insert(END, result)
+        T1.config(state='disabled')
     else:
         T1.insert(END, 'Please enter a password')
 
 
 window = Tk()
 window.wm_title('Password Checker')
+window.config(bg='gray50')
 
 
 l1 = Label(window, text='Password')
 l1.grid(row=0, column=0, pady=(20, 0), padx=(20, 0))
+l1.config(bg='gray50', font='bold')
 
 b1 = Button(window, text='Submit', width=12, command=submit_command)
 b1.grid(row=2, column=0, pady=(20, 20), padx=(20, 0))
@@ -73,9 +77,11 @@ b2.config(background='IndianRed1', activebackground='red')
 password_text = StringVar()
 e1 = Entry(window, textvariable=password_text, show='*')
 e1.grid(row=0, column=1, pady=(20, 0), padx=(0, 12))
+e1.config(bg='gray91')
 
 T1 = Text(window, height=2, width=30)
 T1.grid(row=1, column=0, columnspan=2, pady=(20, 0), padx=(20, 20))
+T1.config(bg='gray91', state='disabled')
 
 
 window.mainloop()
