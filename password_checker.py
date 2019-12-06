@@ -5,7 +5,7 @@ import hashlib
 
 def request_api_data(query_data):
     """
-    connects to api, sends part of hashed password and gets response of matching hashes
+    connects to api, sends part of hashed password and gets response of matching hashes.
     """
     url = 'https://api.pwnedpasswords.com/range/' + query_data
     res = requests.get(url)
